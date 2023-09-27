@@ -1,0 +1,45 @@
+#queuebitcontrolcenter {
+    /* background:blue;
+    border:1px solid; */
+    width:100%;
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+
+    border: 2px solid;
+    margin: 0px 8px 9px 8px;
+    border-radius: 8px;
+    padding: 10px 16px 4px 16px;
+}
+
+#queuebitcontrolcenterheader {
+    position: fixed;
+    margin-top: -25px;
+    margin-left: -26px;
+    background: #121212;
+    height: 25px;
+    padding-right: 5px;
+}
+
+#queuebitcontrolcenter .qbc {
+    /* border:1px solid; */
+    display:flex;
+    flex-direction:column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-right:14px;
+    margin-bottom:10px;
+}
+
+
+
+#queuebitcontrolcenter .qbc p {
+    margin:0px;
+    padding:0px;
+    color: #eee;
+}
+
+#queuebitcontrolcenter .qbc div {
+    font-family: monospace;
+}
