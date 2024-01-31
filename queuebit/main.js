@@ -273,11 +273,18 @@ $(document).ready(function() {
 
             // read current song length
             var currSongLength = readCurrentSong()
+            currSongLength = $("div.playback-bar div.Text__TextElement-sc-if376j-0.duYgEj.encore-text-marginal.npFSJSO1wsu3mEEGb5bh").text()
+            currSongLength = convertStringToSeconds(currSongLength)
 
             // get progress in current song
             var currSongProgress = 0;
+            // old
             // div.playback-bar div.Type__TypeElement-sc-goli3j-0.fcYQUS.playback-bar__progress-time-elapsed inner text...
-            var currProgStr = $("div.playback-bar div.Type__TypeElement-sc-goli3j-0.fcYQUS.playback-bar__progress-time-elapsed").text()
+            // new
+            // Text__TextElement-sc-if376j-0.duYgEj.encore-text-marginal.npFSJSO1wsu3mEEGb5bh
+            var currProgStr = $("div.playback-bar div.Text__TextElement-sc-if376j-0.duYgEj.encore-text-marginal.npFSJSO1wsu3mEEGb5bh").attr("data-test-position")
+            // convert to int, chop off three decimal places
+            currProgStr = currProgStr.substring(0,currProgStr.length-3)
             currSongProgress = convertStringToSeconds(currProgStr)
 
             // get queue length
@@ -288,7 +295,8 @@ $(document).ready(function() {
 
             console.log("currSongLength",currSongLength)
             console.log("currSongProgress",currSongProgress)
-            console.log("queueLength",queueLength)
+            // console.log("queueLength",queueLength)
+            console.log("queue length: "+printNiceLength(queueLength))
 
             // update with current time
             let secondsSince1970 = Math.floor(Date.now() / 1000)
@@ -413,6 +421,9 @@ $(document).ready(function() {
             }
 
         }
+        else {
+            console.log("no now playing")
+        }
 
         return len;
     }
@@ -494,7 +505,7 @@ $(document).ready(function() {
         // print elements now
 
         // console.log("childs",childs)
-        // console.log("childs",childsPastHeaderList)
+        console.log("childs",childsPastHeaderList)
 
         // for all childsPastHeaderLength, check if content = Next in queue
         let queueExists = false
@@ -502,11 +513,14 @@ $(document).ready(function() {
         // console.log("checking if any songs queued")
         for (let i = 0; i < childsPastHeaderList.length; i++) {
             // console.log(childsPastHeaderList[i])
-            // get 
-            if (childsPastHeaderList[i].nodeName == "DIV" && childsPastHeaderList[i].className == "HckHyQocDDePWQL2baOY jf2HafzDEI9jn7Yo05eM") {
+            // // get 
+            // console.log(childsPastHeaderList[i].attributes)
+            // console.log($(childsPastHeaderList[i]).attr("aria-label"))
+            if (childsPastHeaderList[i].nodeName == "DIV" && $(childsPastHeaderList[i]).attr("aria-label") == "Next in queue") {
                 queueExists = true
-                queueObjectIndex = i+1
+                queueObjectIndex = i
                 i = childsPastHeaderList.length
+                console.log("found queue")
             }
         }
 
@@ -516,7 +530,7 @@ $(document).ready(function() {
 
             let queueList = childsPastHeaderList[queueObjectIndex]
 
-            // console.log(queueList)
+            console.log(queueList)
 
             // find div.JUa6JJNj7R_Y3i4P8YUX within
             let interim1 = $(queueList).find("div.JUa6JJNj7R_Y3i4P8YUX")
@@ -526,7 +540,7 @@ $(document).ready(function() {
             // for all direct children of div.JUa6JJNj7R_Y3i4P8YUX, find the second one
             let dchildren = $(interim1).children()
             let interim2 = dchildren[1]
-            // console.log(interim2)
+            // console.log("interim 2:",interim2)
 
             // find all div[role='row'] within - these are the songs
             let songList = $(interim2).find("div[role='row']")
@@ -561,7 +575,8 @@ $(document).ready(function() {
 
         // find div.Type__TypeElement-sc-goli3j-0.bDHxRN.Btg2qHSuepFGBG6X0yEN[data-encore-type="type"] within
         // let interim2 = $(interim1).find("div.Type__TypeElement-sc-goli3j-0.bDHxRN.Btg2qHSuepFGBG6X0yEN")
-        let interim2 = $(interim1).find("div.Type__TypeElement-sc-goli3j-0");
+        // Text__TextElement-sc-if376j-0 duYgEj encore-text-body-small Btg2qHSuepFGBG6X0yEN
+        let interim2 = $(interim1).find("div.Btg2qHSuepFGBG6X0yEN");
         // Type__TypeElement-sc-goli3j-0 bDHxRN Btg2qHSuepFGBG6X0yEN
         // console.log(interim2)
 

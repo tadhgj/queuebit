@@ -10,8 +10,8 @@
 		"128":"128x128.png"
 	},
 	"short_name":"QBit",
-	"version":"0.0.1",
-	"version_name":"Alpha Build 1",
+	"version":"0.0.2",
+	"version_name":"Alpha Build 2",
 	"content_scripts": [
 		{
 			"matches": [
